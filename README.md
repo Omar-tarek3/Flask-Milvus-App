@@ -3,7 +3,7 @@
 
 1. ### Deployment
 - **Labels and Selectors:** `app: flask-app`
-- **Image:** `omartarekabdelall/flask-api:latest`
+- **Image:** `omartarekabdelall/flask-api:flask-image`
 
 2. ### Service
 - **Type:** `ClusterIP`
@@ -15,7 +15,7 @@
 - **NameSpace:** `flask-milvus`
 - **No Host Specified.**
 - **Path:**`/api`
-- **Path:**`test_milvus_connection` to test Milvus connection
+- **Path:**`/test_milvus_connection` to test Milvus connection
 - **Backend Service**: `name: flask-svc`
 - **Port:** 5000
 
