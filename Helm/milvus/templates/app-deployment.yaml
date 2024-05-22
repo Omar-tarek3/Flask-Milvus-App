@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-api 
+  labels:
+    app: {{ .Values.flask.app }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.flask.app }}
+#  strategy:
+#    type: Recreate
+  template:
+    metadata:
+      name: flask-api-pod
+      labels:
+        app: {{ .Values.flask.app }}
+    spec:
+      containers:
+      - image: {{ .Values.flask.image }}
+        name: flask-container
+        ports:
+        - containerPort: 5000
+          name: flask-api-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.flask.service.name}}
+  labels:
+    app: {{ .Values.flask.app }}
+spec:
+ # type: NodePortu
+  ports:
+    - protocol: TCP 
+     # nodePort: 30001
+      port: {{ .Values.flask.service.port}}
+      targetPort: {{ .Values.flask.service.port}}
+  selector:
+    app: {{ .Values.flask.app }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-ingress-svc
+  labels:
+    app.kubernetes.io/managed-by: "Helm"
+  annotations:
+    meta.helm.sh/release-name: "flaskapp-release"
+    meta.helm.sh/release-namespace: "flask"
+  namespace: {{ .Values.flask.namespcae }}
+spec:
+  ingressClassName: nginx
+  rules:
+     # host: todolist.app.com
+      - http:
+          paths:
+            - path: /             #/api --> http://localhost/api
+              pathType: Prefix
+              backend:
+                  service:
+                    name: {{ .Values.flask.service.name}}
+                    port:
+                      number: {{ .Values.flask.service.port}}
+                
