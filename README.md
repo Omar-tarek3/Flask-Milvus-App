@@ -30,7 +30,7 @@
     kubectl create ns flask-milvus
     ```
 
-3. Run the following command at `/Helm` dir
+3. Clone the repository and navigate to the `/Helm` directory, then execute the following command:
     ```
     helm install milvus-app ./milvus --set cluster.enabled=false --set etcd.replicaCount=1 --set minio.mode=standalone --set pulsar.enabled=false -n flask-milvus
    ```
