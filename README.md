@@ -18,8 +18,8 @@
 - **Path:**`test_milvus_connection` to test Milvus connection
 - **Backend Service**: `name: flask-svc`
 - **Port:** 5000
----------
-## Usage at Minikube
+
+## Usage on Minikube Cluster
 
 1. Install NGINX Ingress-controller
    ```
